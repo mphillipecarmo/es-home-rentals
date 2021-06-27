@@ -48,62 +48,64 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
-						{% for casa in casa %}
-                        <h2>Cadastro de Casa</h2>
-						<form method='post' action='editar' class="row g-3">
+                    <div method='get' class="card-body">
+                       <div class="card-body">
+						{% for apt in apt %}
+                        <h2>Cadastro de Apartamento</h2>
+						<form method='post' action='editarApt' class="row g-3">
 							{% csrf_token %}
-							<div class="col-md-4">
-								<label for="qtdeQuartos">Quantidade de Quartos:</label>
-								<input required type="number" class="form-control" name="qtdeQuartos" value="{{casa.qtdeQuartos}}">
+							<div class="form-group">
+								<label for="qtdeQuartos">Quantidade de Quartos</label>
+								<input required type="number" class="form-control" name="qtdeQuartos">
 							</div>
-							<div class="col-md-4">
-								<label for="qtdeSuites">Quantidade de Suítes:</label>
-								<input required type="number" class="form-control" name="qtdeSuites" value="{{casa.qtdeSuites}}">
+							<div class="form-group">
+								<label for="qtdeSuites">Quantidade de Suítes</label>
+								<input required type="number" class="form-control" name="qtdeSuites">
 							</div>
-							<div class="col-md-4">
-								<label for="qtdeSalaEstar">Quantidade de Salas de Estar:</label>
-								<input required type="number" class="form-control" name="qtdeSalaEstar" value="{{casa.qtdeSalaEstar}}">
+							<div class="form-group">
+								<label for="qtdeSalaEstar">Quantidade de Salas de Estar</label>
+								<input required type="number" class="form-control" name="qtdeSalaEstar">
 							</div>
-							<div class="col-md-4">
-								<label for="qtdeVagasGaragem">Quantidade de Vagas de Garagem:</label>
-								<input required type="number" class="form-control" name="qtdeVagasGaragem" value="{{casa.qtdeVagasGaragem}}">
-							</div><br>
-							<div class="col-md-4"><br>
-								<label for="area">Área(m2):</label>
-								<input required type="number" class="form-control" name="area" value="{{casa.area}}">
+							<div class="form-group">
+								<label for="qtdeSalaJantar">Quantidade de Salas de Jantar</label>
+								<input required type="number" class="form-control" name="qtdeSalaJantar">
 							</div>
-							<div class="col-md-4"><br>
+							<div class="form-group">
+								<label for="qtdeVagasGaragem">Quantidade de Vagas de Garagem</label>
+								<input required type="number" class="form-control" name="qtdeVagasGaragem">
+							</div>
+							<div class="form-group">
+								<label for="area">Área(m2)</label>
+								<input required type="number" class="form-control" name="area">
+							</div>
+                            <div class="col-md-4"><br>
 								<label for="area">Valor do Aluguel:</label>
 								<input required type="number" class="form-control" name="aluguel" value="{{casa.aluguel}}">
 							</div>
-							<div class="col-md-6">
+							<div class="form-group form-check">
+								<input required type="checkbox" class="form-check-input" name="possuiArmarioEmbutido">
 								<label class="form-check-label" for="possuiArmarioEmbutido">Possui armário embutido?</label>
 							</div>
-							{% if casa.possuiArmarioEmbutido %}
-								<div class="col-md-3">
-										<input type="radio" name="possuiArmarioEmbutido" value="sim" checked>
-										<label for="armarioSim">Sim</label>
-								</div>
-								<div class="col-md-3">
-										<input type="radio" name="possuiArmarioEmbutido" value="nao">
-										<label for="armarioNao">Não</label><br>  
-								</div>
-							{% else %}
-								<div class="col-md-3">
-										<input type="radio" name="possuiArmarioEmbutido" value="sim">
-										<label for="armarioSim">Sim</label>
-								</div>
-								<div class="col-md-3">
-										<input type="radio" name="possuiArmarioEmbutido" value="nao" checked>
-										<label for="armarioNao">Não</label><br>  
-								</div>
-							{% endif %}
-							<div class="form-group col-md-12">
+							<div class="form-group">
 								<label for="descricao">Descrição:</label><br>
-								<textarea required name="descricao" name="descricao" rows="4" cols="50">{{casa.descricao}}</textarea>
+								<textarea required name="descricao" rows="4" cols="50"></textarea>
 							</div>
-							<div class="form-group col-md-12">
+							<div class="form-group">
+								<label for="andar">Andar</label>
+								<input required type="number" class="form-control" name="andar">
+							</div>
+							<div class="form-group">
+								<label for="valorCondominio">Valor do Condomínio</label>
+								<input required type="number" class="form-control" name="valorCondominio">
+							</div>
+							<div class="form-group form-check">
+								<input required type="checkbox" class="form-check-input" name="possuiPortaria">
+								<label class="form-check-label" for="possuiPortaria">Possui Portaria 24hs?</label>
+							</div>
+
+
+							<input type='hidden' name='tipoImovel' value='apartamento'>
+                            <div class="form-group col-md-12">
 								Endereço:
 							</div>
 							<div class="input-group mb-3 col-md-8">
@@ -134,14 +136,14 @@
 							  <input required type="text" class="form-control" name="cidade" value="{{cidade}}">
 							</div>
 
-							<input type='hidden' name='tipoImovel' value='casa'>
-							<input type='hidden' name='id' value='{{casa.id}}'>
+							<input type='hidden' name='tipoImovel' value='apt'>
+							<input type='hidden' name='id' value='{{apt.id}}'>
 							<div class="col-12">
 							<button type="submit" class="btn btn-primary">Cadastrar</button>
 							<a href="cadastro" class="btn btn-secondary">Cancelar</a>
 							</div>
 						</form>
-						{% endfor %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

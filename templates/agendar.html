@@ -94,7 +94,7 @@
 					<td>{{casa.possuiArmarioEmbutido}}</td>
 					<td>{{casa.descricao}}</td>
                     <td align="center">	
-						<a href="agendar?id={{casa.id}}" class="text-primary"><i class="fas fa-calendar-alt"></i> Agendar</a>
+						<a href="agendamento?id={{casa.id}}" class="text-primary"><i class="fas fa-calendar-alt"></i> Agendar</a>
 					</td>
                 </tr>
 				{% endfor %}
@@ -103,6 +103,54 @@
  
      </div>
  </div> <!-- /#list -->
+
+ <div class="table-responsive col-md-12">
+    <table class="table table-striped" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th>Endereço</th>
+                <th>Valor do Aluguel</th>
+                <th>Nº de Quartos</th>
+                <th>Nº de Suítes</th>
+                <th>Nº de Salas de Estar</th>
+                <th>Nº de Salas de Jantar</th>
+                <th>Nº de Vagas de Garagem</th>
+                <th>Área</th>              
+                <th>Andar</th>
+                <th>Valor Condominio</th>
+                <th>Portaria 24 horas</th>
+                <th>Possui Armário Embutido</th>
+                <th>Descrição</th>
+                <th class="actions text-center">Ações</th>
+             </tr>
+        </thead>
+        <tbody>
+        {% for apt in apts %}
+            <tr>
+                <td>{{apt.endereco}}</td>
+                <td>{{apt.aluguel}}</td>
+                <td>{{apt.qtdeQuartos}}</td>
+                <td>{{apt.qtdeSuites}}</td>
+                <td>{{apt.qtdeSalaEstar}}</td>
+                <td>{{apt.qtdeSalaJantar}}</td>               
+                <td>{{apt.qtdeVagasGaragem}}</td>
+                <td>{{apt.area}}</td>
+                <td>{{apt.andar}}</td>
+                <td>{{apt.valorCondominio}}</td>
+                <td>{{apt.possuiPortaria}}</td>
+                <td>{{apt.possuiArmarioEmbutido}}</td>
+                <td>{{apt.descricao}}</td>
+                <td align="center">	
+                    <a href="agendamento?id={{apt.id}}" class="text-primary"><i class="fas fa-calendar-alt"></i> Agendar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+
+ </div>
+</div> <!-- /#list -->
+
  
      <div id="bottom" class="row">
      
