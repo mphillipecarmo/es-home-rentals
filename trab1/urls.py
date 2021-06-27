@@ -23,7 +23,9 @@ urlpatterns = [
     path('cadastro',cadastro),
     path('listar',listar),
     path('editar',editar),
+    path('editarApt',editarApt),
     path('deletar',deletar),
     path('agendar',agendar),
+    path('agendamento',agendamento),
     #path('cadastrar',cadastrar),
 ]
