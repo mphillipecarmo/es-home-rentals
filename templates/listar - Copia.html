@@ -1,0 +1,162 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="https://demo.learncodeweb.com/favicon.ico">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <title>Cadastro</title>
+</head>
+
+<body>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<!-- Modal -->
+	<!--
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+					
+				</div>
+				<div class="modal-body">Deseja realmente excluir este item? </div>
+				<div class="modal-footer">
+					<a class="btn btn-primary" href='deletar'>Sim</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+	 <div class="container-fluid">
+	  <div class="navbar-header">
+	   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		<span class="sr-only">Toggle navigation</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	   </button>
+	   <a class="navbar-brand" href="#">Web Dev Academy</a>
+	  </div>
+	  <div id="navbar" class="navbar-collapse collapse">
+	   <ul class="nav navbar-nav navbar-right">
+		<li><a href="#">Início</a></li>
+		<li><a href="#">Opções</a></li>
+		<li><a href="#">Perfil</a></li>
+		<li><a href="#">Ajuda</a></li>
+	   </ul>
+	  </div>
+	 </div>-->
+	</nav>
+
+<div id="main" class="container-fluid" style="margin-top: 50px">
+     <div id="top" class="row">
+		<div class="col-md-3">
+			<h2>Casas Cadastradas</h2>
+		</div>
+	 
+		<div class="col-md-6">
+			<div class="input-group h2">
+				<input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
+				<span class="input-group-btn">
+					<button class="btn btn-primary" type="submit">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</div>
+	 
+		<div class="col-md-3">
+			<a href="cadastro" class="btn btn-primary pull-right h2">Cadastrar Nova Casa</a>
+		</div>
+	</div> <!-- /#top -->
+ 
+     <hr />
+     <div id="list" class="row">
+ 
+    <div class="table-responsive col-md-12">
+        <table class="table table-striped" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th>Nº de Quartos</th>
+                    <th>Nº de Suítes</th>
+                    <th>Nº de Salas de Estar</th>
+                    <th>Nº de Vagas de Garagem</th>
+					<th>Área</th>
+					<th>Possui Armário Embutido</th>
+					<th>Descrição</th>
+                    <th class="actions">Ações</th>
+                 </tr>
+            </thead>
+            <tbody>
+			{% for casa in casas %}
+                <tr>
+                    <td>{{casa.qtdeQuartos}}</td>
+                    <td>{{casa.qtdeSuites}}</td>
+					<td>{{casa.qtdeSalaEstar}}</td>
+					<td>{{casa.qtdeVagasGaragem}}</td>
+					<td>{{casa.area}}</td>
+					<td>{{casa.possuiArmarioEmbutido}}</td>
+					<td>{{casa.descricao}}</td>
+                    <td align="center">	
+						<a href="edit-users.php?editId=" class="text-primary"><i class="fa fa-fw fa-edit"></i> Edit</a> | 
+						<a href="delete.php?delId=" class="text-danger" onClick="return confirm('Are you sure to delete this user?');"><i class="fa fa-fw fa-trash"></i> Delete</a>
+					</td>
+                </tr>
+				{% endfor %}
+            </tbody>
+         </table>
+ 
+     </div>
+ </div> <!-- /#list -->
+ 
+     <div id="bottom" class="row">
+     
+     </div> <!-- /#bottom -->
+ </div>  <!-- /#main -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.caret/0.1/jquery.caret.js"></script>
+	<script
+  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+  crossorigin="anonymous"></script>
+    
+</body>
+
+</html>
