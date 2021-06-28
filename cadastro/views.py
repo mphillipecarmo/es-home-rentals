@@ -14,9 +14,37 @@ def agendar(request):
     casas = Casa.objects.all()
     apts = Apartamento.objects.all()
 
+    casasExibidas = []
+    aptsExibidos = []
+    
+    bairros = []
+
+    for c in casas:
+        bairro = c.endereco.split(', ')[2] 
+        if bairro not in bairros:
+            bairros.append(bairro)
+
+    for a in apts:
+        bairro = a.endereco.split(', ')[2] 
+        if bairro not in bairros:
+            bairros.append(bairro)
+
+    if 'bairro' in request.GET and request.GET['bairro'] is not '':
+        for c in casas:
+            bairro = c.endereco.split(', ')[2] 
+            if bairro == request.GET['bairro']:
+                casasExibidas.append(c)
+        for a in apts:
+            bairro = a.endereco.split(', ')[2] 
+            if bairro == request.GET['bairro']:
+                aptsExibidos.append(a)
+    else:
+        casasExibidas = casas
+        aptsExibidos = apts
     context = {
-        'casas': casas,
-         'apts': apts,
+        'casas': casasExibidas,
+        'apts': aptsExibidos,
+        'bairros': bairros
     }
     return render(request, 'agendar.html', context)
     
@@ -138,10 +166,58 @@ def listar(request):
     return render(request, 'listar.html', context)
 
 def agendamento(request):
-    context = {
+    if request.method == 'POST':
+
+        data = request.POST['data']
+        idImovel = request.POST['id']
+        tipoImovel = request.POST['tipoImovel']
+        horario = request.POST['horario']
+        data = data +' ' + horario + ':0'
         
-    }
-    return render(request, 'agendamento.html', context)
+        novoHorario = HorarioMarcado(idImovel=idImovel, tipoImovel=tipoImovel, data=data, nomeCliente='a')
+        novoHorario.save()
+        return redirect('agendamento')
+    else:
+        idImovel = request.GET['id']
+        if request.GET['tipoImovel'] == 'casa':
+            casa = Casa.objects.filter(id=idImovel)
+            tipoImovel = 'casa'
+            context = {
+                'imovel' : casa,
+                'tipoImovel': 'casa',
+                'rua' : casa[0].endereco.split(', ')[0],
+                'numero' : casa[0].endereco.split(', ')[1],
+                'bairro' : casa[0].endereco.split(', ')[2],
+                'cidade' : casa[0].endereco.split(', ')[3]      
+            }
+        elif request.GET['tipoImovel'] == 'apt':
+            apt = Apartamento.objects.filter(id=idImovel)
+            tipoImovel = 'apt'
+            context = {
+                'imovel' : apt,
+                'tipoImovel': 'apt' ,
+                'rua' : apt[0].endereco.split(', ')[0] ,
+                'numero' : apt[0].endereco.split(', ')[1] ,
+                'bairro' : apt[0].endereco.split(', ')[2] ,
+                'cidade' : apt[0].endereco.split(', ')[3]
+            }
+        if 'data' in request.GET:
+            data = request.GET['data']
+            horariosLivres = []
+            horariosOcupados = []
+            reservas = HorarioMarcado.objects.filter(idImovel=idImovel,tipoImovel=tipoImovel)
+            for r in reservas:
+                horariosOcupados.append(r.data.hour)
+            
+            for i in range(8,18):
+                if i not in horariosOcupados:
+                    horariosLivres.append(str(i))
+            #pdb.set_trace()
+            context['data'] = data
+            context['horariosLivres'] = horariosLivres
+            return render(request, 'agendamento2.html', context)
+        else:
+            return render(request, 'agendamento.html', context)
     
 
     

@@ -32,5 +32,5 @@ class Apartamento(models.Model):
 class HorarioMarcado(models.Model):
     nomeCliente = models.TextField(null=True,blank=True)
     data = models.DateTimeField(null=True,blank=True)
-    id_imovel = models.IntegerField(null=True,blank=True)
-    tipo_imovel = models.IntegerField(null=True, blank=True)
+    idImovel = models.IntegerField(null=True,blank=True)
+    tipoImovel = models.TextField(null=True, blank=True)

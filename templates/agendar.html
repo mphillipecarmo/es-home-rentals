@@ -43,28 +43,33 @@
 <div id="main" class="container-fluid" style="margin-top: 50px">
      <div id="top" class="row">
 		<div class="col-md-3">
-			<h2>Casas Cadastradas</h2>
+			<h2>Imóveis Cadastrados</h2>
 		</div>
 		
-		<div class="col-md-6">
-			<div class="input-group h2">
-				<input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
-				<span class="input-group-btn">
-					<button class="btn btn-primary" type="submit">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
-				</span>
-			</div>
+		<div class="col-md-7">
+
 		</div>
 	 
-		<div class="col-md-3">
-			<a href="cadastro" class="btn btn-primary pull-right h2"><i class="fa fa-fw fa-plus-circle"></i> Cadastrar Imóvel</a>
+		<div class="col-md-2">
+			<div class="input-group h2">
+                <form action="" method="get">
+                    <select onchange="this.form.submit()" required class="form-control" name="bairro">
+                        <option disabled selected>Escolher Bairro</option>
+                        <option value=''>Nenhum</option>
+                        {% for bairro in bairros %}
+                        <option onclick='' value='{{bairro}}'>{{bairro}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+			</div>
 		</div>
 	</div> <!-- /#top -->
  
      <hr />
      <div id="list" class="row">
- 
+        <div class="col-md-3">
+			<h4>Casas</h2>
+		</div>
     <div class="table-responsive col-md-12">
         <table class="table table-striped" cellspacing="0" cellpadding="0">
             <thead>
@@ -94,7 +99,7 @@
 					<td>{{casa.possuiArmarioEmbutido}}</td>
 					<td>{{casa.descricao}}</td>
                     <td align="center">	
-						<a href="agendamento?id={{casa.id}}" class="text-primary"><i class="fas fa-calendar-alt"></i> Agendar</a>
+						<a href="agendamento?tipoImovel=casa&id={{casa.id}}" class="text-primary"><i class="fas fa-calendar-alt"></i> Agendar</a>
 					</td>
                 </tr>
 				{% endfor %}
@@ -104,6 +109,10 @@
      </div>
  </div> <!-- /#list -->
 
+    <div id="list" class="row">
+        <div class="col-md-3">
+			<h4>Apartamentos</h2>
+		</div>
  <div class="table-responsive col-md-12">
     <table class="table table-striped" cellspacing="0" cellpadding="0">
         <thead>
@@ -141,7 +150,7 @@
                 <td>{{apt.possuiArmarioEmbutido}}</td>
                 <td>{{apt.descricao}}</td>
                 <td align="center">	
-                    <a href="agendamento?id={{apt.id}}" class="text-primary"><i class="fas fa-calendar-alt"></i> Agendar</a>
+                    <a href="agendamento?tipoImovel=apt&id={{apt.id}}" class="text-primary"><i class="fas fa-calendar-alt"></i> Agendar</a>
                 </td>
             </tr>
             {% endfor %}

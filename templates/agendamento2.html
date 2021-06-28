@@ -76,7 +76,8 @@
                     <div class="card-body">
 						{% for imovel in imovel %}
                         <h2>Agendar Visita</h2>
-						<form method='get' action='agendamento' class="row g-3">
+						<form method='post' action='agendamento' class="row g-3">
+                            {% csrf_token %}
 							<div class="form-group col-md-12">
 								Endereço:
 							</div>
@@ -109,15 +110,28 @@
 							</div>
 
                             <div class="mb-3 col-md-6">
-								<label for="data">Selecione a Data:</label>
-								<input required type="date" class="form-control" name="data">
+								<label for="data">Data:</label>
+								<input readonly type="date" class="form-control" name="data" value="{{data}}">
+							</div>
+
+                            <div class="col-md-12">
+                                <label for="horario">Selecione o Horário:</label>
+                            </div>
+
+                            <div class="mb-3 col-md-6">
+                                <select required class="form-control" name="horario">
+                                    <option disabled selected value></option>
+                                    {% for horario in horariosLivres %}
+                                    <option value='{{horario}}'>{{horario}}:00</option>
+                                    {% endfor %}
+                                </select>
 							</div>
 
 							<input type='hidden' name='tipoImovel' value='{{tipoImovel}}'>
 							<input type='hidden' name='id' value='{{imovel.id}}'>
                             
 							<div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">Próximo</button>
+                                <button type="submit" class="btn btn-primary">Finalizar</button>
                                 <a href="agendar" class="btn btn-secondary">Voltar</a>
 							</div>
 						</form>
