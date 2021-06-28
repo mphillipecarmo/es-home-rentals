@@ -50,7 +50,11 @@ def agendar(request):
     
 def deletar(request):
     id = request.GET['id'] 
-    casa = Casa.objects.filter(id=id).delete()
+    tipoImovel = request.GET['tipoImovel']
+    if tipoImovel == 'casa':
+        Casa.objects.filter(id=id).delete()
+    elif tipoImovel == 'apt':
+        Apartamento.objects.filter(id=id).delete()
     return redirect("/listar")
     
 def editar(request):
@@ -83,7 +87,7 @@ def editar(request):
             area=area, possuiArmarioEmbutido=possuiArmarioEmbutido, descricao=descricao,endereco=endereco,aluguel=aluguel)
             #casa.save()
             
-            return HttpResponseRedirect('/sucesso')
+            return HttpResponseRedirect('/listar')
         else:
             pdb.set_trace()
     else:
@@ -136,8 +140,8 @@ def editarApt(request):
             
             Apartamento.objects.filter(id=id).update(qtdeQuartos=qtdeQuartos, qtdeSuites=qtdeSuites, qtdeSalaEstar=qtdeSalaEstar,qtdeVagasGaragem=qtdeVagasGaragem,qtdeSalaJantar=qtdeSalaJantar,
             andar=andar,valorCondominio=valorCondominio,possuiPortaria=possuiPortaria,area=area, possuiArmarioEmbutido=possuiArmarioEmbutido, descricao=descricao,endereco=endereco,aluguel=aluguel)
-            return HttpResponseRedirect('/sucesso')
-        pdb.set_trace()
+            return HttpResponseRedirect('/listar')
+        #pdb.set_trace()
         return HttpResponseRedirect('/falhou')
     else:
     
@@ -172,9 +176,10 @@ def agendamento(request):
         idImovel = request.POST['id']
         tipoImovel = request.POST['tipoImovel']
         horario = request.POST['horario']
+        nomeCliente = request.POST['nomeCliente']
         data = data +' ' + horario + ':0'
         
-        novoHorario = HorarioMarcado(idImovel=idImovel, tipoImovel=tipoImovel, data=data, nomeCliente='a')
+        novoHorario = HorarioMarcado(idImovel=idImovel, tipoImovel=tipoImovel, data=data, nomeCliente=nomeCliente)
         novoHorario.save()
         return redirect('agendamento')
     else:
@@ -252,7 +257,7 @@ def cadastro(request):
                 area=area, possuiArmarioEmbutido=possuiArmarioEmbutido, descricao=descricao,endereco=endereco,aluguel=aluguel)
                 casa.save()
                 
-                return HttpResponseRedirect('/sucesso')
+                return HttpResponseRedirect('/listar')
             else:
                 pdb.set_trace()
         elif request.POST['tipoImovel'] == 'apartamento':
@@ -291,7 +296,7 @@ def cadastro(request):
                 andar=andar,valorCondominio=valorCondominio,possuiPortaria=possuiPortaria,area=area, possuiArmarioEmbutido=possuiArmarioEmbutido, descricao=descricao,endereco=endereco,aluguel=aluguel)
                 apt.save()
                 
-                return HttpResponseRedirect('/sucesso')
+                return HttpResponseRedirect('/listar')
             else:
                 pdb.set_trace()
 
