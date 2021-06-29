@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from .forms import FormCasa, FormApartamento
 from .models import *
 import pdb
+from django.contrib import messages
 
 # Create your views here.
 
@@ -181,7 +182,8 @@ def agendamento(request):
         
         novoHorario = HorarioMarcado(idImovel=idImovel, tipoImovel=tipoImovel, data=data, nomeCliente=nomeCliente)
         novoHorario.save()
-        return redirect('agendamento')
+        messages.success(request, "Horário Agendado com sucesso!")
+        return redirect('/')
     else:
         idImovel = request.GET['id']
         if request.GET['tipoImovel'] == 'casa':
@@ -256,8 +258,8 @@ def cadastro(request):
                 casa = Casa(qtdeQuartos=qtdeQuartos, qtdeSuites=qtdeSuites, qtdeSalaEstar=qtdeSalaEstar,qtdeVagasGaragem=qtdeVagasGaragem,
                 area=area, possuiArmarioEmbutido=possuiArmarioEmbutido, descricao=descricao,endereco=endereco,aluguel=aluguel)
                 casa.save()
-                
-                return HttpResponseRedirect('/listar')
+                messages.success(request, "Imóvel cadastrado com sucesso!")
+                return HttpResponseRedirect('/')
             else:
                 pdb.set_trace()
         elif request.POST['tipoImovel'] == 'apartamento':

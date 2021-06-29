@@ -37,6 +37,15 @@
             <p>Nosso sistema de registro permite o anúncio de casas e apartamentos na região metropolitana de BH, para acessar os serviços de pesquisa clique no botão relevante abaixo!</p>
         </div>
     </div>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{message}}
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 
     <div class="container">
         <div class="row">
